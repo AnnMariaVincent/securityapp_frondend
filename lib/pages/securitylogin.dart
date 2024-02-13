@@ -9,6 +9,9 @@ class seclogin extends StatefulWidget {
 }
 
 class _secloginState extends State<seclogin> {
+  String result="",getName="",getPass="";
+  TextEditingController name=new TextEditingController();
+  TextEditingController pass=new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,6 +42,7 @@ class _secloginState extends State<seclogin> {
                 children: [
                   SizedBox(height: 30,),
                   TextField(
+                    controller: name,
                     decoration: InputDecoration(
                         labelText: ("USERNAME"),
                         hintText: "Enter User Nmae",
@@ -47,6 +51,7 @@ class _secloginState extends State<seclogin> {
                   ),
                   SizedBox(height: 30,),
                   TextField(
+                    controller: pass,
                     decoration: InputDecoration(
                         labelText: ("PASSWORD"),
                         hintText: "Enter Password",

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:securityapp/pages/addsecurity.dart';
+import 'package:securityapp/pages/viewsecurity.dart';
 
 class afadmin extends StatefulWidget {
   const afadmin({super.key});
@@ -67,6 +68,8 @@ class _afadminState extends State<afadmin> {
                           )
                       ),
                       onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>viewsec()));
+
 
 
                       },
