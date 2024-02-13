@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:securityapp/pages/adminlogin.dart';
+import 'package:securityapp/pages/securitylogin.dart';
 
 class buttons extends StatelessWidget {
   const buttons({super.key});
@@ -41,11 +43,11 @@ class buttons extends StatelessWidget {
     ),
     onPressed: ()
     {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>adminlogin()));
 
 
-
-
-    }, child: Text("ADMIN LOGIN"),
+    },
+      child: Text("ADMIN LOGIN"),
     ),
     ),
 
@@ -61,6 +63,8 @@ class buttons extends StatelessWidget {
     ),
     onPressed: ()
     {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>seclogin()));
+
 
 
     }, child: Text("SECURITY LOGIN"),
