@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:securityapp/service/postmodel.dart';
+import 'package:securityapp/service/postservive.dart';
 
 class addsecurity extends StatefulWidget {
   const addsecurity({super.key});
@@ -8,6 +10,24 @@ class addsecurity extends StatefulWidget {
 }
 
 class _addsecurityState extends State<addsecurity> {
+  String result="",getName="",getempid="",getaddres="",getphno="",getemail="",getpass="";
+  TextEditingController name=new TextEditingController();
+  TextEditingController empid=new TextEditingController();
+  TextEditingController addres=new TextEditingController();
+  TextEditingController phno=new TextEditingController();
+  TextEditingController email=new TextEditingController();
+  TextEditingController pass=new TextEditingController();
+
+  void sendbutton()async{
+    final response=await PostApiService().sendbutton(name.text, empid.text, addres.text, phno.text, email.text, pass.text);
+    if (response['status'] == 'sucess') {
+      print("sucessfully add");
+    }
+    else {
+      print("error");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,45 +57,60 @@ class _addsecurityState extends State<addsecurity> {
                 children: [
                   SizedBox(height: 30,),
                   TextField(
+                    controller: name,
                     decoration: InputDecoration(
                         labelText: ("NAME"),
                         hintText: "Enter Nmae",
                         border: OutlineInputBorder()
                     ),
                   ),
-                  SizedBox(height: 30,),
+                  SizedBox(height: 10,),
                   TextField(
+                    controller: empid,
                     decoration: InputDecoration(
                         labelText: ("EMP ID"),
                         hintText: "Enter EmpId",
                         border: OutlineInputBorder()
                     ),
                   ),
-                  SizedBox(height: 30,),
+
+                  SizedBox(height: 10,),
                   TextField(
+                    controller: addres,
+                    decoration: InputDecoration(
+                        labelText: ("ADDRESS"),
+                        hintText: "Enter Address",
+                        border: OutlineInputBorder()
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  TextField(
+                    controller: phno,
                     decoration: InputDecoration(
                         labelText: ("PHONE NUMBER"),
                         hintText: "Enter Phone Number",
                         border: OutlineInputBorder()
                     ),
                   ),
-                  SizedBox(height: 30,),
+                  SizedBox(height: 10,),
                   TextField(
+                    controller: email,
                     decoration: InputDecoration(
                         labelText: ("EMAIL ID"),
                         hintText: "Enter EmailId",
                         border: OutlineInputBorder()
                     ),
                   ),
-                  SizedBox(height: 30,),
+                  SizedBox(height: 10,),
                   TextField(
+                    controller: pass,
                     decoration: InputDecoration(
                         labelText: ("PASSWORD"),
                         hintText: "Enter Password",
                         border: OutlineInputBorder()
                     ),
                   ),
-                  SizedBox(height: 30,),
+                  SizedBox(height: 10,),
                   SizedBox(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -86,6 +121,7 @@ class _addsecurityState extends State<addsecurity> {
                           )
                       ),
                       onPressed: (){
+                        sendbutton();
 
 
                       },
