@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:securityapp/service/visitorservice.dart';
 
 class afsecuri extends StatefulWidget {
   const afsecuri({super.key});
@@ -8,6 +9,21 @@ class afsecuri extends StatefulWidget {
 }
 
 class _afsecuriState extends State<afsecuri> {
+  String getName="",getpurpose="",getphno="";
+  TextEditingController visitorname=new TextEditingController();
+  TextEditingController purpose=new TextEditingController();
+  TextEditingController phno=new TextEditingController();
+
+
+  void sendbutton1()async{
+    final response=await VisitorApiService().sendbutton1(visitorname.text, purpose.text, phno.text);
+    if (response['status'] == 'sucess') {
+      print("sucessfully add");
+    }
+    else {
+      print("error");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,6 +55,7 @@ class _afsecuriState extends State<afsecuri> {
                 children: [
                   SizedBox(height: 30,),
                   TextField(
+                    controller: visitorname,
                     decoration: InputDecoration(
                         labelText: ("VISITOR NAME"),
                         hintText: "Enter Visitor Name",
@@ -47,6 +64,7 @@ class _afsecuriState extends State<afsecuri> {
                   ),
                   SizedBox(height: 30,),
                   TextField(
+                    controller: purpose,
                     decoration: InputDecoration(
                         labelText: ("PURPOSE"),
                         hintText: "Enter Purpose",
@@ -55,6 +73,7 @@ class _afsecuriState extends State<afsecuri> {
                   ),
                   SizedBox(height: 30,),
                   TextField(
+                    controller: phno,
                     decoration: InputDecoration(
                         labelText: ("PHONE NUMBER"),
                         hintText: "Enter Phone Number",
@@ -72,6 +91,7 @@ class _afsecuriState extends State<afsecuri> {
                           )
                       ),
                       onPressed: (){
+                        sendbutton1();
 
 
                       },
