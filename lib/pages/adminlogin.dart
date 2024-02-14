@@ -73,8 +73,7 @@ class _adminloginState extends State<adminlogin> {
                 getName = name.text;
                 getPass = pass.text;
                 if (getName == "admin" && getPass == "12345") {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => afadmin()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => afadmin()));
                 }
                 else {
                   setState(() {

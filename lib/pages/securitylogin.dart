@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:securityapp/pages/afseclogin.dart';
+import 'package:securityapp/service/signupapi.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class seclogin extends StatefulWidget {
   const seclogin({super.key});
@@ -9,9 +11,31 @@ class seclogin extends StatefulWidget {
 }
 
 class _secloginState extends State<seclogin> {
-  String result="",getName="",getPass="";
-  TextEditingController name=new TextEditingController();
+  String getemail="",getPass="";
+  TextEditingController email=new TextEditingController();
   TextEditingController pass=new TextEditingController();
+  void SendValue() async{
+    print("email :"+email.text);
+    print("password : "+pass.text);
+
+    final response =await SignupApiService().loginApi(email.text, pass.text);
+    if(response["status"]=="Success"){
+      String email=response["email"]["_id"].toString();
+      print("successfuly login :"+email);
+      SharedPreferences.setMockInitialValues({});
+      SharedPreferences preferences=await SharedPreferences.getInstance();
+      preferences.setString("email", email);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>afsecuri()));
+    }
+    else if(response["status"]=="invalid email id"){
+      print("invalid email id");
+    }
+    else
+    {
+      print("invalid password");
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,9 +66,9 @@ class _secloginState extends State<seclogin> {
                 children: [
                   SizedBox(height: 30,),
                   TextField(
-                    controller: name,
+                    controller: email,
                     decoration: InputDecoration(
-                        labelText: ("USERNAME"),
+                        labelText: ("EMAIL ID"),
                         hintText: "Enter User Nmae",
                         border: OutlineInputBorder()
                     ),

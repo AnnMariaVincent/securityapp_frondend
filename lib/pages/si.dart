@@ -1,38 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:securityapp/service/securityservice.dart';
+import 'package:securityapp/pages/afseclogin.dart';
+import 'package:securityapp/service/signupapi.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class afsecuri extends StatefulWidget {
-  const afsecuri({super.key});
+class seclogin extends StatefulWidget {
+  const seclogin({super.key});
 
   @override
-  State<afsecuri> createState() => _afsecuriState();
+  State<seclogin> createState() => _secloginState();
 }
 
-class _afsecuriState extends State<afsecuri> {
-  String result="",getvisname="",getpur="",getphno="";
-  TextEditingController visitorname=new TextEditingController();
-  TextEditingController purpose=new TextEditingController();
-  TextEditingController phno=new TextEditingController();
-  void sendbutton1()async{
-    final response=await visiorApiService().sendbutton1(visitorname.text, purpose.text, phno.text);
-    if (response['status'] == 'sucess') {
-      print("sucessfully add");
+class _secloginState extends State<seclogin> {
+  String getemail="",getPass="";
+  TextEditingController email=new TextEditingController();
+  TextEditingController pass=new TextEditingController();
+
+  void SendValue() async{
+    print("email :"+email.text);
+    print("password : "+pass.text);
+
+    final response =await SignupApiService().loginApi(email.text, pass.text);
+    if(response["status"]=="Success"){
+      String userId=response["userdata"]["_id"].toString();
+      print("successfuly login :"+userId);
+     SharedPreferences.setMockInitialValues({});
+      SharedPreferences preferences=await SharedPreferences.getInstance();
+      preferences.setString("userId", userId);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>afsecuri()));
     }
-    else {
-      print("error");
+    else if(response["status"]=="invalid email id"){
+      print("invalid email id");
     }
+    else
+    {
+      print("invalid password");
+    }
+
   }
-
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple.withOpacity(.50),
-
-
+          title: Text("SECURITY LOGIN"),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -56,28 +67,19 @@ class _afsecuriState extends State<afsecuri> {
                 children: [
                   SizedBox(height: 30,),
                   TextField(
-                    controller: visitorname,
+                    controller: email,
                     decoration: InputDecoration(
-                        labelText: ("VISITOR NAME"),
-                        hintText: "Enter Visitor Name",
+                        labelText: ("EMAIL ID"),
+                        hintText: "Enter User Nmae",
                         border: OutlineInputBorder()
                     ),
                   ),
                   SizedBox(height: 30,),
                   TextField(
-                    controller: purpose,
+                    controller: pass,
                     decoration: InputDecoration(
-                        labelText: ("PURPOSE"),
-                        hintText: "Enter Purpose",
-                        border: OutlineInputBorder()
-                    ),
-                  ),
-                  SizedBox(height: 30,),
-                  TextField(
-                    controller: phno,
-                    decoration: InputDecoration(
-                        labelText: ("PHONE NUMBER"),
-                        hintText: "Enter Phone Number",
+                        labelText: ("PASSWORD"),
+                        hintText: "Enter Password",
                         border: OutlineInputBorder()
                     ),
                   ),
@@ -92,11 +94,13 @@ class _afsecuriState extends State<afsecuri> {
                           )
                       ),
                       onPressed: (){
-                        sendbutton1();
+
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>afsecuri()));
+
 
 
                       },
-                      child: Text("SUBMIT"),
+                      child: Text("LOGIN"),
                     ),
                   ),
 
@@ -109,5 +113,3 @@ class _afsecuriState extends State<afsecuri> {
     );
   }
 }
-
-
